@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: Hibernate-Spring-Security
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Stephen
+Implementation-Vendor-Id: com.catalystdevworks.training
+Build-Jdk: 1.8.0_40
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
