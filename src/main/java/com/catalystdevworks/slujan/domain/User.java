@@ -1,4 +1,4 @@
-package domain;
+package com.catalystdevworks.slujan.domain;
 
 //import com.google.common.base.Objects;
 
@@ -25,8 +25,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull
-	@Column(name = "id", updatable = false)
+	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 	
     @Version

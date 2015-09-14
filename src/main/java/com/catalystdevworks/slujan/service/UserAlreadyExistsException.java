@@ -1,4 +1,4 @@
-package service;
+package com.catalystdevworks.slujan.service;
 
 public class UserAlreadyExistsException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package controller;
+package com.catalystdevworks.slujan.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -15,9 +15,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import domain.User;
-import service.UserService;
-import util.UserUtil;
+import com.catalystdevworks.slujan.controller.UserController;
+import com.catalystdevworks.slujan.domain.User;
+import com.catalystdevworks.slujan.service.UserService;
+import com.catalystdevworks.slujan.util.UserUtil;
 
 
 @RunWith(MockitoJUnitRunner.class)

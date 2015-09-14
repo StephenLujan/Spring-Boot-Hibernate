@@ -1,4 +1,4 @@
-package demo;
+package com.catalystdevworks.slujan.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,13 +24,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import repository.UserRepository;
+import com.catalystdevworks.slujan.repository.UserRepository;
 
+/**
+ * This is a reference application for combining Hibernate ORM, REST, and Spring
+ * Security on a Spring Boot Application
+ */
+// Main annotation for Spring Boot
 @SpringBootApplication
+// Tell spring boot where to look for components to @Autowire
 @ComponentScan(
-{ "controller", "demo", "domain", "repository", "service" })
-@EntityScan("domain")
-@EnableJpaRepositories("repository")
+{ "com.catalystdevworks.slujan" })
+// Tell Hibernate ORM (now part of Spring Boot) where to look for entities
+@EntityScan("com.catalystdevworks.slujan.domain")
+// Finds Jpa Repository interfaces and implement them
+@EnableJpaRepositories("com.catalystdevworks.slujan.repository")
+// Allows the @Transactional annotation
 @EnableTransactionManagement
 public class HibernateSpringSecurityApplication
 {
@@ -40,7 +49,7 @@ public class HibernateSpringSecurityApplication
 		SpringApplication.run(HibernateSpringSecurityApplication.class, args);
 	}
 
-	// Look away
+	// Look away now...
 	@Bean
 	CommandLineRunner init(final UserRepository userRepository)
 	{
@@ -49,53 +58,10 @@ public class HibernateSpringSecurityApplication
 			@Override
 			public void run(String... arg0) throws Exception
 			{
-				userRepository.save(domain.User.createUser(
-						"slujan", "slujan@catalystitservices.com", "pass"));
+				userRepository.save(com.catalystdevworks.slujan.domain.User
+						.createUser("slujan", "slujan@catalystitservices.com",
+								"pass"));
 			}
 		};
 	}
-}
-
-@Configuration
-class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
-
-  @Autowired
-  UserRepository userRepository;
-
-  @Override
-  public void init(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailsService());
-  }
-
-  @Bean
-  UserDetailsService userDetailsService() {
-    return new UserDetailsService() {
-
-      @Override
-      public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        domain.User user = userRepository.findByUsername(username);
-        if(user != null) {
-        return new User(user.getUsername(), user.getPassword(), true, true, true, true,
-                AuthorityUtils.createAuthorityList("USER"));
-        } else {
-          throw new UsernameNotFoundException("could not find the user '"
-                  + username + "'");
-        }
-      }
-      
-    };
-  }
-}
-
-@EnableWebSecurity
-@Configuration
-class WebSecurityConfig extends WebSecurityConfigurerAdapter {
- 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests().anyRequest().fullyAuthenticated().and().
-    httpBasic().and().
-    csrf().disable();
-  }
-  
 }

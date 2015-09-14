@@ -1,9 +1,9 @@
-package util;
+package com.catalystdevworks.slujan.util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.User;
+import com.catalystdevworks.slujan.domain.User;
 
 public class UserUtil {
 

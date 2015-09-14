@@ -1,8 +1,8 @@
-package service;
+package com.catalystdevworks.slujan.service;
 
 import java.util.List;
 
-import domain.User;
+import com.catalystdevworks.slujan.domain.User;
 
 public interface UserService {
 

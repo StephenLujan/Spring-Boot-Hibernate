@@ -1,20 +1,24 @@
-package controller;
+package com.catalystdevworks.slujan.controller;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import domain.User;
-import service.UserAlreadyExistsException;
-import service.UserService;
+import com.catalystdevworks.slujan.domain.User;
+import com.catalystdevworks.slujan.service.UserAlreadyExistsException;
+import com.catalystdevworks.slujan.service.UserService;
 
 import javax.validation.Valid;
+
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasRole('ROLE_USER')")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);

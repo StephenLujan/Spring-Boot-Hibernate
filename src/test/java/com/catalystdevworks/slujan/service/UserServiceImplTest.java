@@ -1,4 +1,4 @@
-package service;
+package com.catalystdevworks.slujan.service;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,9 +6,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import domain.User;
-import repository.UserRepository;
-import util.UserUtil;
+import com.catalystdevworks.slujan.domain.User;
+import com.catalystdevworks.slujan.repository.UserRepository;
+import com.catalystdevworks.slujan.service.UserAlreadyExistsException;
+import com.catalystdevworks.slujan.service.UserService;
+import com.catalystdevworks.slujan.service.UserServiceImpl;
+import com.catalystdevworks.slujan.util.UserUtil;
 
 import java.util.Collection;
 

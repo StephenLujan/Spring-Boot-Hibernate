@@ -1,4 +1,4 @@
-package service;
+package com.catalystdevworks.slujan.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import domain.User;
-import repository.UserRepository;
+import com.catalystdevworks.slujan.domain.User;
+import com.catalystdevworks.slujan.repository.UserRepository;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 import java.util.List;
 
 @Service
