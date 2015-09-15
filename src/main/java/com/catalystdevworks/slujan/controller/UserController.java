@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +39,7 @@ public class UserController {
         LOGGER.debug("Received request to list all users");
         return userService.getList();
     }
-
+    
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handleUserAlreadyExistsException(UserAlreadyExistsException e) {

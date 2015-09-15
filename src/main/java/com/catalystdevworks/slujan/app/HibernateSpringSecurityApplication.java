@@ -1,29 +1,18 @@
 package com.catalystdevworks.slujan.app;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.orm.jpa.EntityScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.catalystdevworks.slujan.controller.WebController;
+import com.catalystdevworks.slujan.domain.User;
 import com.catalystdevworks.slujan.repository.UserRepository;
 
 /**
@@ -33,8 +22,7 @@ import com.catalystdevworks.slujan.repository.UserRepository;
 // Main annotation for Spring Boot
 @SpringBootApplication
 // Tell spring boot where to look for components to @Autowire
-@ComponentScan(
-{ "com.catalystdevworks.slujan" })
+@ComponentScan("com.catalystdevworks.slujan")
 // Tell Hibernate ORM (now part of Spring Boot) where to look for entities
 @EntityScan("com.catalystdevworks.slujan.domain")
 // Finds Jpa Repository interfaces and implement them
@@ -43,6 +31,8 @@ import com.catalystdevworks.slujan.repository.UserRepository;
 @EnableTransactionManagement
 public class HibernateSpringSecurityApplication
 {
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(HibernateSpringSecurityApplication.class);
 
 	public static void main(String[] args)
 	{
@@ -58,9 +48,12 @@ public class HibernateSpringSecurityApplication
 			@Override
 			public void run(String... arg0) throws Exception
 			{
-				userRepository.save(com.catalystdevworks.slujan.domain.User
-						.createUser("slujan", "slujan@catalystitservices.com",
-								"pass"));
+				LOGGER.info("populating database with test data...");
+				userRepository.save(User.createUser("slujan",
+						"slujan@catalystitservices.com", "pass"));
+				userRepository.save(User.createUser("pacman",
+						"pacman@atari.com", "wakawakawaka"));
+				userRepository.save(User.createUser("user", "a@b.com", "pass"));
 			}
 		};
 	}

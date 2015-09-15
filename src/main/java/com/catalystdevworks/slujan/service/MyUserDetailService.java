@@ -1,11 +1,12 @@
 package com.catalystdevworks.slujan.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -13,16 +14,19 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.catalystdevworks.slujan.domain.UserRole;
 import com.catalystdevworks.slujan.repository.UserRepository;
 
 public class MyUserDetailService implements UserDetailsService
 {
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(UserDetailsService.class);
 	@Autowired
 	private UserRepository userRepository;
 
+	@Transactional(readOnly=true)
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException
@@ -31,14 +35,15 @@ public class MyUserDetailService implements UserDetailsService
 				.findByUsername(username);
 		if (user != null)
 		{
+			LOGGER.debug("Creating UserDetails for " + user.getUsername());
 			return new User(user.getUsername(), user.getPassword(), true, true,
 					true, true, MyUserDetailService.getAuthorities(user
 							.getRoles()));
-		} 
-		else 
+		} else
 		{
 			throw new UsernameNotFoundException("could not find the user '"
 					+ username + "'");
+			
 		}
 	}
 
@@ -52,6 +57,7 @@ public class MyUserDetailService implements UserDetailsService
 		// magic the list of UserRoles into a String array
 		String[] strings = roles.stream().map(role -> role.getRoleName())
 				.toArray(String[]::new);
+		LOGGER.debug("user had roles: " + strings.toString());
 
 		// the built in AuthorityUtils should be used to create
 		// GrantedAuthorities
