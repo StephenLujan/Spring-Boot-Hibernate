@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.catalystdevworks.slujan.domain.UserRole;
 import com.catalystdevworks.slujan.repository.UserRepository;
@@ -33,7 +34,8 @@ public class MyUserDetailService implements UserDetailsService
 			return new User(user.getUsername(), user.getPassword(), true, true,
 					true, true, MyUserDetailService.getAuthorities(user
 							.getRoles()));
-		} else
+		} 
+		else 
 		{
 			throw new UsernameNotFoundException("could not find the user '"
 					+ username + "'");
@@ -55,5 +57,4 @@ public class MyUserDetailService implements UserDetailsService
 		// GrantedAuthorities
 		return AuthorityUtils.createAuthorityList(strings);
 	}
-
 }

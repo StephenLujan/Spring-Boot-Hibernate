@@ -20,11 +20,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.catalystdevworks.slujan.repository.UserRepository;
+import com.catalystdevworks.slujan.service.MyUserDetailService;
 
 @Configuration
 class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
 {
-
 	@Autowired
 	UserRepository userRepository;
 
@@ -37,31 +37,9 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
 	@Bean
 	UserDetailsService userDetailsService()
 	{
-		return new UserDetailsService()
-		{
-
-			@Override
-			public UserDetails loadUserByUsername(String username)
-					throws UsernameNotFoundException
-			{
-				com.catalystdevworks.slujan.domain.User user = userRepository
-						.findByUsername(username);
-				if (user != null)
-				{
-					return new User(user.getUsername(), user.getPassword(),
-							true, true, true, true,
-							AuthorityUtils.createAuthorityList("USER"));
-				} else
-				{
-					throw new UsernameNotFoundException(
-							"could not find the user '" + username + "'");
-				}
-			}
-
-		};
+		return new MyUserDetailService();
 	}
 }
-
 
 @EnableWebSecurity
 @Configuration
@@ -69,12 +47,10 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
 prePostEnabled = true)
 class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception
 	{
 		http.authorizeRequests().anyRequest().fullyAuthenticated().and()
 				.httpBasic().and().csrf().disable();
 	}
-
 }
