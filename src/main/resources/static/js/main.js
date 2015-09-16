@@ -18,11 +18,18 @@ function postUser(userName, email, password, callback) {
 	console.log(user);
 	$.post('user/', user, callback, JSON);
 }
-
+/*
 $(function(){
 	console.log('running...');
 	getUsers(function(data){
 		console.log('test');
 		$("#detail-1").text("test");
+	});
+});*/
+
+$(function(){
+	console.log('running...');
+	$.get('/login.html', function(data){
+		$("#content").html(data);
 	});
 });

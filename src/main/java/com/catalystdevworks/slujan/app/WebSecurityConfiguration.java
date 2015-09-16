@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.catalystdevworks.slujan.repository.UserRepository;
 import com.catalystdevworks.slujan.service.MyUserDetailService;
 
@@ -41,7 +42,12 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter
 	@Override
 	protected void configure(HttpSecurity http) throws Exception
 	{
-		http.authorizeRequests().anyRequest().fullyAuthenticated().and()
-				.httpBasic().and().csrf().disable();
+		http.authorizeRequests().anyRequest().fullyAuthenticated()
+				.antMatchers("/", "/js/**", "/css/**", "/fonts/**").permitAll()
+				.and().formLogin().loginPage("/login")
+				.failureUrl("/login?error").usernameParameter("username")
+				.permitAll().and().logout().logoutUrl("/logout")
+				.logoutSuccessUrl("/").permitAll().and().httpBasic().and()
+				.csrf().disable();
 	}
 }
