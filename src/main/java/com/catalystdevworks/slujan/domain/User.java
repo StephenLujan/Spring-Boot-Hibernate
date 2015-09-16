@@ -5,8 +5,10 @@ package com.catalystdevworks.slujan.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,104 +23,116 @@ import lombok.ToString;
 @Entity
 @Table(name = "users")
 @ToString
-public class User {
+public class User
+{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
-	
-    @Version
-    private Long version;
+
+	@Version
+	private Long version;
 
 	@NotNull
 	@Size(max = 64)
 	@Column(name = "password")
 	private String password;
-	
+
 	@NotNull
 	@Size(max = 64)
 	@Column(name = "username", unique = true)
-    private String username;
-	
+	private String username;
+
 	@NotNull
 	@Size(max = 64)
 	@Column(name = "email", unique = true)
-    private String email;
-	
-	@OneToMany(mappedBy = "user")
-    private Set<UserRole> roles;
+	private String email;
 
-	User() {
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade =
+	{ CascadeType.ALL })
+	private Set<UserRole> roles;
+
+	User()
+	{
 	}
-	
-    public static User createUser(String username, String email, String password) {
-        User user = new User();
 
-        user.username = username;
-        user.email = email;
-        user.password = password;
+	public static User createUser(String username, String email, String password)
+	{
+		User user = new User();
 
-        if(user.roles == null) {
-            user.roles = new HashSet<UserRole>();
-        }
+		user.username = username;
+		user.email = email;
+		user.password = password;
 
-        //create a new user with basic user privileges
-        user.roles.add(
-                new UserRole(
-                        RoleEnum.USER.toString(),
-                        user
-                ));
+		if (user.roles == null)
+		{
+			user.roles = new HashSet<UserRole>();
+		}
 
-        return user;
-    }
+		// create a new user with basic user privileges
+		user.roles.add(new UserRole(RoleEnum.USER.toString(), user));
 
-    public Long getId() {
-        return id;
-    }
+		return user;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId()
+	{
+		return id;
+	}
 
-    public Long getVersion() {
-        return version;
-    }
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
-    public void setVersion(Long version) {
-        this.version = version;
-    }
+	public Long getVersion()
+	{
+		return version;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public void setVersion(Long version)
+	{
+		this.version = version;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public String getUsername()
+	{
+		return username;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setUsername(String username)
+	{
+		this.username = username;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getPassword()
+	{
+		return password;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail()
+	{
+		return email;
+	}
 
-    public Set<UserRole> getRoles() {
-        return roles;
-    }
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
 
-    public void setRoles(Set<UserRole> roles) {
-        this.roles = roles;
-    }
+	public Set<UserRole> getRoles()
+	{
+		return roles;
+	}
+
+	public void setRoles(Set<UserRole> roles)
+	{
+		this.roles = roles;
+	}
 }
-
