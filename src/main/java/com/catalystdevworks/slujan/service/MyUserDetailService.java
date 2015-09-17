@@ -35,15 +35,15 @@ public class MyUserDetailService implements UserDetailsService
 				.findByUsername(username);
 		if (user != null)
 		{
-			LOGGER.debug("Creating UserDetails for " + user.getUsername());
+			LOGGER.debug("Creating UserDetails for '" + username + "'");
 			return new User(user.getUsername(), user.getPassword(), true, true,
 					true, true, MyUserDetailService.getAuthorities(user
 							.getRoles()));
 		} else
 		{
+			LOGGER.debug("could not find the user '" + username + "'");
 			throw new UsernameNotFoundException("could not find the user '"
 					+ username + "'");
-			
 		}
 	}
 

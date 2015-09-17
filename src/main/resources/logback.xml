@@ -63,6 +63,8 @@
 		</triggeringPolicy>
 	</appender>
 	
+	<logger name="com.catalystdevworks.slujan" level="ALL" />
+	
 	<!-- ******************************** -->
 	<!-- Additional logging for Hibernate -->
 	<!-- ******************************** -->
@@ -83,7 +85,8 @@
 	<!--<logger name="org.hibernate.cache" level="DEBUG" /> -->
 	<!-- Log HQL and SQL ASTs during query parsing -->
 	<!--<logger name="org.hibernate.hql.internal.ast.AST" level="DEBUG" /> -->
-
+	<!-- ******************************** -->
+	
 	<root level="INFO">
 		<appender-ref ref="FILE" />
 		<appender-ref ref="STDOUT" />

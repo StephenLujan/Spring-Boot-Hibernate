@@ -2,6 +2,7 @@ package com.catalystdevworks.slujan.app;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,6 +10,8 @@ import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.catalystdevworks.slujan.controller.WebController;
@@ -41,7 +44,11 @@ public class HibernateSpringSecurityApplication
 		SpringApplication.run(HibernateSpringSecurityApplication.class, args);
 	}
 
+
 	// Look away now...
+	// Just populating the database with test data
+	@Autowired
+	PasswordEncoder encoder;
 	@Bean
 	CommandLineRunner init(final UserRepository userRepository)
 	{
@@ -49,10 +56,11 @@ public class HibernateSpringSecurityApplication
 		{
 			@Override
 			public void run(String... arg0) throws Exception
-			{
+			{	
+				//PasswordEncoder encoder = new BCryptPasswordEncoder();
 				LOGGER.info("populating database with test data...");
 				User user = User.createUser("slujan",
-						"slujan@catalystitservices.com", "pass");
+						"slujan@catalystitservices.com", encoder.encode("pass"));
 				UserRole admin = new UserRole("ADMIN", user);
 				UserRole admin2 = new UserRole("ADMIN", user);
 				
@@ -60,8 +68,8 @@ public class HibernateSpringSecurityApplication
 				user.getRoles().add(admin2);
 				userRepository.save(user);
 				userRepository.save(User.createUser("pacman",
-						"pacman@atari.com", "wakawakawaka"));
-				userRepository.save(User.createUser("user", "a@b.com", "pass"));
+						"pacman@atari.com", encoder.encode("wakawakawaka")));
+				userRepository.save(User.createUser("user", "a@b.com", encoder.encode("pass")));
 			}
 		};
 	}
