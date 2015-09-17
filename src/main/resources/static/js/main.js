@@ -25,11 +25,14 @@ $(function(){
 		console.log('test');
 		$("#detail-1").text("test");
 	});
-});*/
+});
+*/
 
+/*
 $(function(){
 	console.log('running...');
 	$.get('/login.html', function(data){
 		$("#content").html(data);
 	});
 });
+*/

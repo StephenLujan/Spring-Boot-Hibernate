@@ -12,7 +12,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.catalystdevworks.slujan.controller.WebController;
+import com.catalystdevworks.slujan.domain.RoleEnum;
 import com.catalystdevworks.slujan.domain.User;
+import com.catalystdevworks.slujan.domain.UserRole;
 import com.catalystdevworks.slujan.repository.UserRepository;
 
 /**
@@ -49,8 +51,14 @@ public class HibernateSpringSecurityApplication
 			public void run(String... arg0) throws Exception
 			{
 				LOGGER.info("populating database with test data...");
-				userRepository.save(User.createUser("slujan",
-						"slujan@catalystitservices.com", "pass"));
+				User user = User.createUser("slujan",
+						"slujan@catalystitservices.com", "pass");
+				UserRole admin = new UserRole("ADMIN", user);
+				UserRole admin2 = new UserRole("ADMIN", user);
+				
+				user.getRoles().add(admin);
+				user.getRoles().add(admin2);
+				userRepository.save(user);
 				userRepository.save(User.createUser("pacman",
 						"pacman@atari.com", "wakawakawaka"));
 				userRepository.save(User.createUser("user", "a@b.com", "pass"));

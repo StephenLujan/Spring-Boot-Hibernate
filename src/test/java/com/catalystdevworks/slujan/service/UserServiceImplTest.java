@@ -85,5 +85,4 @@ public class UserServiceImplTest {
         assertTrue(list.isEmpty());
         verify(userRepository, times(1)).findAll();
     }
-
 }
