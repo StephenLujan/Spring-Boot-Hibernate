@@ -1,40 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
- <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-	<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-		<Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} %-5level %logger{36} - %msg%n
-                </Pattern>
-	</encoder>
- </appender>
+	<appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
+		<target>System.err</target>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>WARN</level>
+		</filter>
+		<encoder>
+			<pattern>%-5level [%thread] %logger %n %msg%n</pattern>
+		</encoder>
+	</appender>
 
- <appender name="FILE"
-	class="ch.qos.logback.core.rolling.RollingFileAppender">
-	<file>%USERPROFILE%/My Documents/LogbackLogs</file>
-	<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-	   <Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-           </Pattern>
-	</encoder>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<target>System.out</target>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>DEBUG</level>
+			<onMatch>ACCEPT</onMatch>
+		</filter>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+		</filter>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>TRACE</level>
+			<onMatch>ACCEPT</onMatch>
+		</filter>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>WARN</level>
+			<onMatch>DENY</onMatch>
+		</filter>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>DENY</onMatch>
+		</filter>
+		<encoder>
+			<pattern>%-5level [%thread] %logger %n %msg%n</pattern>
+		</encoder>
+	</appender>
 
-	<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-		<FileNamePattern>%USERPROFILE%/My Documents/LogbackLogs.%i.zip</FileNamePattern>
-		<MinIndex>1</MinIndex>
-		<MaxIndex>30</MaxIndex>
-	</rollingPolicy>
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${user.home}/My Documents/LOGS/LogbackLogs</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} -
+				%msg%n
+			</Pattern>
+		</encoder>
 
-	<triggeringPolicy
-		class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-		<MaxFileSize>2MB</MaxFileSize>
-	</triggeringPolicy>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>${user.home}/My Documents/LOGS/LogbackLogs.%i.zip
+			</FileNamePattern>
+			<MinIndex>1</MinIndex>
+			<MaxIndex>30</MaxIndex>
+		</rollingPolicy>
 
-  </appender>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>2MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+	
+	<!-- ******************************** -->
+	<!-- Additional logging for Hibernate -->
+	<!-- ******************************** -->
+	<!-- Log everything. This is a lot of information but it is useful for troubleshooting -->
+	<!--<logger name="org.hibernate" level="DEBUG" /> -->
+	<!-- Log all SQL statements as they are executed with through JDBC -->
+	<!--<logger name="org.hibernate.SQL" level="DEBUG" /> -->
+	<!-- Log all values as they are bound to JDBC parameters and extracted from 
+		JDBC results -->
+	<!--<logger name="org.hibernate.type.descriptor.sql" level="ALL" /> -->
+	<!-- Log all SQL DDL statements as they are executed during execution of 
+		any of the schema migration tools -->
+	<!--<logger name="org.hibernate.tool.hbm2ddl" level="DEBUG" /> -->
+	<!-- Log the state of all entities (max 20 entities) associated with the 
+		session at flush time -->
+	<!--<logger name="org.hibernate.pretty" level="DEBUG" /> -->
+	<!-- Log all second-level cache activity -->
+	<!--<logger name="org.hibernate.cache" level="DEBUG" /> -->
+	<!-- Log HQL and SQL ASTs during query parsing -->
+	<!--<logger name="org.hibernate.hql.internal.ast.AST" level="DEBUG" /> -->
 
-  <logger name="org.hibernate.type" level="ALL" />
-  <logger name="org.hibernate" level="DEBUG" />
-
-  <root level="INFO">
-	<appender-ref ref="FILE" />
-	<appender-ref ref="STDOUT" />
-  </root>
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="STDERR" />
+	</root>
 
 </configuration>
