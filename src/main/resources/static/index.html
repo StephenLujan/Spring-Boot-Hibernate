@@ -78,9 +78,15 @@
        </div>
         <div class="col-md-4">
           <h2>To Do</h2>
-          <p id="detail-3-query"></p>
-          <p id="detail-3-data">Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><button class="btn btn-default">View details &raquo;</button></p>
+          <form>
+	          <label for="detail-3-query">RESTful End Point</label>
+	          <input type="text" id="detail-3-query" placeholder="/user/[username]"></input>
+	          <label for="detail-3-data">JSON</label>
+	          <textarea id="detail-3-data" rows="5" cols="50"></textarea>
+          </form>
+          
+          <button id="detail-3-put" class="btn btn-default">Put &raquo;</button>
+          <button id="detail-3-post" class="btn btn-default">Post &raquo;</button>
         </div>
       </div>
 	  

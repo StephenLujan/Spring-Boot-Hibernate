@@ -23,6 +23,28 @@ function detail2() {
 	});
 }
 
+//function detail3-get-user(){
+//	var user = {
+//		userName : $('#detail-3-username').val(),
+//		email : $('#detail-3-email').val(),
+//		password : $('#detail-3-email').val(),
+//	}
+//}
+
+function detail3put(){
+	var query = $('#detail-3-query').val();
+	var data = $('#detail-3-data').val();
+	
+	put(query, data);
+}
+
+function detail3post(){
+	var query = $('#detail-3-query').val();
+	var data = $('#detail-3-data').val();
+	
+	post(query, data);
+}
+
 $(function() {
 	$("#detail-1-data").text("Click below...");
 	$("#detail-2-data").text("Click below...");
@@ -30,6 +52,6 @@ $(function() {
 	$("#detail-1-button").click(detail1);
 	$("#detail-2-button").click(detail2);
 
-	// detail1();
-	// detail2();
+	$("#detail-3-put").click(detail3put);
+	$("#detail-3-post").click(detail3post);
 });
