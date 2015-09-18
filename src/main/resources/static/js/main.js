@@ -1,29 +1,35 @@
-function detail1(){
+function myFormat(data) {
+	var string = JSON.stringify(data, null, "    ");
+	return string.replace(new RegExp(' ', 'g'), '\xa0')
+				 .replace(new RegExp('\\n', 'g'), '<br/>');
+}
+
+function detail1() {
 	console.log("detail1()");
-	getUsers(function (data) {
+	getUsers(function(data) {
 		console.log(data);
-		$("#detail-1-data").text(data);
+		$("#detail-1-data").html(myFormat(data));
 	});
 }
 
 function detail2() {
 	console.log("detail2()");
 	username = $("#detail-2-username").val();
-	query = "/user/"+username;
+	query = "/user/" + username;
 	$("#detail-2-query").text(query);
-	getUser(function (data) {
+	getUser(username, function(data) {
 		console.log(data);
-		$("#detail-2-data").text(data);
+		$("#detail-2-data").html(myFormat(data));
 	});
 }
 
 $(function() {
-	$("#detail-1-data").text("loading...");
-	$("#detail-2-data").text("loading...");
-	
+	$("#detail-1-data").text("Click below...");
+	$("#detail-2-data").text("Click below...");
+
 	$("#detail-1-button").click(detail1);
 	$("#detail-2-button").click(detail2);
-	
-	detail1();
-	detail2();
+
+	// detail1();
+	// detail2();
 });

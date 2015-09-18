@@ -1,6 +1,7 @@
 "use strict";
 
-var MIME = 'application/json'
+//var MIME = 'application/json;charset=UTF-8';
+var MIME = '';
 
 function getUsers(callback) {
 	$.get('user/', callback, MIME);

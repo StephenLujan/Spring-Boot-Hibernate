@@ -29,11 +29,4 @@ public class WebController {
 	 	LOGGER.debug("Received GET at /login");
         return new ModelAndView("loginform.html", "error", error);
 	}
-	
-//	@RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public String Login(String username, String password) {
-//	 	LOGGER.debug("Received POST at /login");
-//	 	return "index.html";
-//	}
-
 }
