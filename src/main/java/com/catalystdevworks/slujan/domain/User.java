@@ -18,6 +18,8 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.ToString;
 
 @Entity
@@ -49,6 +51,7 @@ public class User
 	@Column(name = "email", unique = true)
 	private String email;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade =
 	{ CascadeType.ALL })
 	private Set<UserRole> roles;

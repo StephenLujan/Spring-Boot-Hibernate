@@ -37,8 +37,8 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
 	@Bean
 	UserDetailsService userDetailsService()
 	{
-		return new MyUserDetailService();
-		// return new FakeUserDetailService();
+		// return new MyUserDetailService();
+		return new FakeUserDetailService();
 	}
 
 	@Bean
@@ -68,8 +68,9 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter
 				.antMatchers("/js/**", "/css/**", "/loginform.html",
 						"/fonts/**").permitAll().and().formLogin()
 				.loginPage("/login").failureUrl("/login?error")
-				.usernameParameter("username").permitAll().and().logout()
-				.logoutUrl("/logout").logoutSuccessUrl("/").permitAll().and()
-				.httpBasic().and().csrf().disable();
+				.usernameParameter("username").passwordParameter("password")
+				.permitAll().and().logout().logoutUrl("/logout")
+				.logoutSuccessUrl("/").permitAll().and().httpBasic().and()
+				.csrf().disable();
 	}
 }

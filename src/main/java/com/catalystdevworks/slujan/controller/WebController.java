@@ -17,7 +17,7 @@ public class WebController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebController.class);
 
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		LOGGER.debug("Received request root address");

@@ -13,6 +13,8 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "user_roles")
 public class UserRole
@@ -31,6 +33,7 @@ public class UserRole
 	@Column(name = "role_name")
 	private String roleName;
 
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private User user;
 

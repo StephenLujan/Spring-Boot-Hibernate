@@ -16,8 +16,9 @@ import javax.validation.Valid;
 
 import java.util.List;
 
+
+@PreAuthorize("hasRole('USER')")
 @RestController
-@PreAuthorize("hasRole('ROLE_USER')")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -39,6 +40,27 @@ public class UserController {
         LOGGER.debug("Received request to list all users");
         return userService.getList();
     }
+    
+	/**
+	 * Get a specific user's details by username
+	 * @param username
+	 * @return
+	 */
+	@RequestMapping(value="/user/{username}", method=RequestMethod.GET)
+	public User getUser(@PathVariable String username){
+		return userService.getUserByUserName(username);
+	}
+	
+	/**
+	 * Update the information on a user.
+	 * @param username
+	 * @param user
+	 */
+	@RequestMapping(value="/user/{username}", method=RequestMethod.PUT)
+	public void  putUser(@PathVariable String username, @RequestBody User user){
+		userService.save(user);
+		System.err.println(username + " : " + user.toString()); //debug message
+	}
     
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
