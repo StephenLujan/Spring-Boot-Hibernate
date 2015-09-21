@@ -36,13 +36,13 @@ public class UserServiceImpl implements UserService
 	{
 		user.setId(null);
 		LOGGER.debug("Creating {}", user);
-//		User existing = repository.findByUsername(user.getUsername());
-//		if (existing != null)
-//		{
-//			throw new UserAlreadyExistsException(String.format(
-//					"There already exists a user with the username=%s",
-//					user.getUsername()));
-//		}
+		User existing = repository.findByUsername(user.getUsername());
+		if (existing != null)
+		{
+			throw new UserAlreadyExistsException(String.format(
+					"There already exists a user with the username=%s",
+					user.getUsername()));
+		}
 		return repository.save(user);
 	}
 
