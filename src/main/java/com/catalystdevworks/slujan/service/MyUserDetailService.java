@@ -17,6 +17,11 @@ import com.catalystdevworks.slujan.domain.User;
 import com.catalystdevworks.slujan.domain.UserRole;
 import com.catalystdevworks.slujan.repository.UserRepository;
 
+/**
+ * Connects to the database to build Spring's {@link UserDetails} with
+ * {@link GrantedAuthority}s from our {@link User}s with {@link UserRole}s.
+ *
+ */
 public class MyUserDetailService implements UserDetailsService
 {
 	private static final Logger LOGGER = LoggerFactory
@@ -47,13 +52,16 @@ public class MyUserDetailService implements UserDetailsService
 
 	/**
 	 * @param roles
-	 *            is any Set of UserRole objects such as a User may possess
-	 * @return a List of GrantedAuthorities usable by Spring Security
+	 *            is any {@link Set} of {@link UserRole} objects such as a
+	 *            {@link User} may possess
+	 * @return a {@link List} of {@link GrantedAuthorities} usable by Spring
+	 *         Security
 	 */
 	public static List<GrantedAuthority> getAuthorities(Set<UserRole> roles)
 	{
 		// magic the list of UserRoles into a String array
-		String[] strings = roles.stream().map(role -> role.getRoleName())
+		String[] strings = roles.stream()
+				.map(role -> role.getRoleName().toString())
 				.toArray(String[]::new);
 		LOGGER.debug("user had roles: " + strings.toString());
 

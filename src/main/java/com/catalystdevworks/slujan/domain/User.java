@@ -20,6 +20,9 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/**
+ * An application user with all describing information and their credentials.
+ */
 @Entity
 @Table(name = "users")
 public class User
@@ -29,9 +32,6 @@ public class User
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
-
-	@Version
-	private Long version;
 
 	@NotNull
 	@Size(max = 64)
@@ -71,7 +71,7 @@ public class User
 		}
 
 		// create a new user with basic user privileges
-		user.roles.add(new UserRole(RoleEnum.USER.toString(), user));
+		user.roles.add(new UserRole(RoleEnum.USER, user));
 
 		return user;
 	}
@@ -84,16 +84,6 @@ public class User
 	public void setId(Long id)
 	{
 		this.id = id;
-	}
-
-	public Long getVersion()
-	{
-		return version;
-	}
-
-	public void setVersion(Long version)
-	{
-		this.version = version;
 	}
 
 	public String getUsername()

@@ -2,6 +2,8 @@ package com.catalystdevworks.slujan.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +17,12 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * A persistant, {@link User}-granted, authorization to the application.
+ * A User may have many UserRoles authorizing different areas of the application.
+ * 
+ * @see RoleEnum
+ */
 @Entity
 @Table(name = "user_roles")
 public class UserRole
@@ -25,13 +33,10 @@ public class UserRole
 	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 
-	@Version
-	private Long version;
-
 	@NotNull
-	@Size(max = 64)
 	@Column(name = "role_name")
-	private String roleName;
+	@Enumerated(EnumType.STRING)
+	private RoleEnum roleName;
 
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -39,7 +44,7 @@ public class UserRole
 
 	public UserRole(){}
 
-	public UserRole(String roleName, User user)
+	public UserRole(RoleEnum roleName, User user)
 	{
 		this.roleName = roleName;
 		this.user = user;
@@ -55,22 +60,12 @@ public class UserRole
 		this.id = id;
 	}
 
-	public Long getVersion()
-	{
-		return version;
-	}
-
-	public void setVersion(Long version)
-	{
-		this.version = version;
-	}
-
-	public String getRoleName()
+	public RoleEnum getRoleName()
 	{
 		return roleName;
 	}
 
-	public void setRoleName(String roleName)
+	public void setRoleName(RoleEnum roleName)
 	{
 		this.roleName = roleName;
 	}

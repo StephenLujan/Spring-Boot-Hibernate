@@ -61,8 +61,8 @@ public class HibernateSpringSecurityApplication
 				LOGGER.info("populating database with test data...");
 				User user = User.createUser("slujan",
 						"slujan@catalystitservices.com", encoder.encode("pass"));
-				UserRole admin = new UserRole("ADMIN", user);
-				UserRole admin2 = new UserRole("ADMIN", user);
+				UserRole admin = new UserRole(RoleEnum.ADMIN, user);
+				UserRole admin2 = new UserRole(RoleEnum.ADMIN, user);
 				
 				user.getRoles().add(admin);
 				user.getRoles().add(admin2);

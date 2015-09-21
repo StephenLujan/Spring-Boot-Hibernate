@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.catalystdevworks.slujan.domain.User;
 
+
 public interface UserService {
 
     User create(User user);

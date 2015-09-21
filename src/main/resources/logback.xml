@@ -7,7 +7,7 @@
 			<level>WARN</level>
 		</filter>
 		<encoder>
-			<pattern>%-5level [%thread] %logger %n %msg%n</pattern>
+			<pattern>%-5level [%thread] %logger %n  %msg%n</pattern>
 		</encoder>
 	</appender>
 
@@ -34,7 +34,7 @@
 			<onMatch>DENY</onMatch>
 		</filter>
 		<encoder>
-			<pattern>%-5level [%thread] %logger %n %msg%n</pattern>
+			<pattern>%-5level [%thread] %logger %n  %msg%n</pattern>
 		</encoder>
 	</appender>
 
