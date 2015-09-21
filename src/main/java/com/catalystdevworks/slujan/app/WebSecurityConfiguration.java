@@ -37,8 +37,8 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
 	@Bean
 	UserDetailsService userDetailsService()
 	{
-		// return new MyUserDetailService();
-		return new FakeUserDetailService();
+		return new MyUserDetailService();
+		//return new FakeUserDetailService();
 	}
 
 	@Bean

@@ -3,19 +3,17 @@ package com.catalystdevworks.slujan.service;
 import java.util.List;
 import java.util.Set;
 
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.catalystdevworks.slujan.domain.User;
 import com.catalystdevworks.slujan.domain.UserRole;
 import com.catalystdevworks.slujan.repository.UserRepository;
 
@@ -23,22 +21,22 @@ public class MyUserDetailService implements UserDetailsService
 {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(UserDetailsService.class);
+
 	@Autowired
 	private UserRepository userRepository;
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException
 	{
-		com.catalystdevworks.slujan.domain.User user = userRepository
-				.findByUsername(username);
+		User user = userRepository.findByUsername(username);
 		if (user != null)
 		{
 			LOGGER.debug("Creating UserDetails for '" + username + "'");
-			return new User(user.getUsername(), user.getPassword(), true, true,
-					true, true, MyUserDetailService.getAuthorities(user
-							.getRoles()));
+			return new org.springframework.security.core.userdetails.User(
+					user.getUsername(), user.getPassword(), true, true, true,
+					true, MyUserDetailService.getAuthorities(user.getRoles()));
 		} else
 		{
 			LOGGER.debug("could not find the user '" + username + "'");
@@ -62,5 +60,15 @@ public class MyUserDetailService implements UserDetailsService
 		// the built in AuthorityUtils should be used to create
 		// GrantedAuthorities
 		return AuthorityUtils.createAuthorityList(strings);
+	}
+
+	public UserRepository getUserRepository()
+	{
+		return userRepository;
+	}
+
+	public void setUserRepository(UserRepository userRepository)
+	{
+		this.userRepository = userRepository;
 	}
 }
