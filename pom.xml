@@ -69,20 +69,15 @@
 		</dependency>
 		
 		<!-- MySQL -->
+		
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.6</version>
-			<scope>provided</scope>
-		</dependency>
 		
 		<!-- logback -->
+		
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
@@ -104,6 +99,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>

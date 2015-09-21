@@ -20,11 +20,8 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import lombok.ToString;
-
 @Entity
 @Table(name = "users")
-@ToString
 public class User
 {
 
