@@ -34,7 +34,6 @@ public class UserServiceImpl implements UserService
 	@Transactional
 	public User create(@NotNull @Valid final User user)
 	{
-		user.setId(null);
 		LOGGER.debug("Creating {}", user);
 		User existing = repository.findByUsername(user.getUsername());
 		if (existing != null)

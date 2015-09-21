@@ -1,6 +1,5 @@
 package com.catalystdevworks.slujan.domain;
 
-//import com.google.common.base.Objects;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,21 +26,17 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "users")
 public class User
 {
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
-	private Long id;
-
-	@NotNull
-	@Size(max = 64)
-	@Column(name = "password")
-	private String password;
-
 	@NotNull
 	@Size(max = 64)
 	@Column(name = "username", unique = true)
 	private String username;
+	
+	@NotNull
+	@Size(max = 64)
+	@Column(name = "password")
+	private String password;
 
 	@NotNull
 	@Size(max = 64)
@@ -74,16 +69,6 @@ public class User
 		user.roles.add(new UserRole(RoleEnum.USER, user));
 
 		return user;
-	}
-
-	public Long getId()
-	{
-		return id;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
 	}
 
 	public String getUsername()

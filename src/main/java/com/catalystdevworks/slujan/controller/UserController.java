@@ -48,6 +48,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user/{username}", method=RequestMethod.GET)
 	public User getUser(@PathVariable String username){
+		LOGGER.debug("Received request get the user with username {}", username);
 		return userService.getUserByUserName(username);
 	}
 	
@@ -58,8 +59,8 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user/{username}", method=RequestMethod.PUT)
 	public void  putUser(@PathVariable String username, @RequestBody User user){
+		LOGGER.debug("Received request put the user {}", user);
 		userService.createOrUpdate(user);
-		System.err.println(username + " : " + user.toString()); //debug message
 	}
     
     @ExceptionHandler

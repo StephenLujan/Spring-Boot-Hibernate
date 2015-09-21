@@ -61,7 +61,6 @@ public class UserServiceImplTest {
 
     private void stubRepositoryToReturnExistingUser() {
         final User user = UserUtil.createUser();
-        when(userRepository.findOne(user.getId())).thenReturn(user);
         when(userRepository.findByUsername(user.getUsername())).thenReturn(user);
     }
 

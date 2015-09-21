@@ -47,6 +47,7 @@
     </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
+    <!-- 
     <div class="jumbotron">
       <div class="container">
         <h1>Hello, world!</h1>
@@ -54,7 +55,8 @@
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
       </div>
     </div>
-
+ 	-->
+ 	
     <div class="container">
     	<div id="content">
     	
@@ -69,21 +71,26 @@
           <h2>Get User</h2>
           <p id="detail-2-query">/user/pacman<p>
           <p id="detail-2-data">Javascript not loaded! </p>
-<!--           <form class="form-inline"> -->
+          <p>
+          <form class="form-inline">
             <div class="form-group">
+              <label for="detail-2-username">Username: </label>
               <input id="detail-2-username" type="text" value="pacman" placeholder="Username" class="form-control">
             </div>
-            <button id="detail-2-button" class="btn btn-default">Refresh &raquo;</button>
-<!--            </form> -->
+           </form>
+           </p>
+           <button id="detail-2-button" class="btn btn-default">Refresh &raquo;</button>
        </div>
         <div class="col-md-4">
-          <h2>To Do</h2>
-          <form>
+          <h2>Create or Update</h2>
+          <p><form class="form-inline">
+          <div class="form-group">
 	          <label for="detail-3-query">RESTful End Point</label>
-	          <input type="text" id="detail-3-query" placeholder="/user/[username]"></input>
+	          <input type="text" id="detail-3-query" placeholder="/user/[username]" class="form-control"></input>
+	          </div><div class="form-group">
 	          <label for="detail-3-data">JSON</label>
-	          <textarea id="detail-3-data" rows="5" cols="50"></textarea>
-          </form>
+	          <textarea id="detail-3-data" rows="10" cols="50" class="form-control"></textarea></div>
+          </form></p>
           
           <button id="detail-3-put" class="btn btn-default">Put &raquo;</button>
           <button id="detail-3-post" class="btn btn-default">Post &raquo;</button>
