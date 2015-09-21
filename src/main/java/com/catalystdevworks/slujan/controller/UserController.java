@@ -32,7 +32,7 @@ public class UserController {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public User createUser(@RequestBody @Valid final User user) {
         LOGGER.debug("Received request to create the {}", user);
-        return userService.save(user);
+        return userService.create(user);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
@@ -58,7 +58,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user/{username}", method=RequestMethod.PUT)
 	public void  putUser(@PathVariable String username, @RequestBody User user){
-		userService.save(user);
+		userService.createOrUpdate(user);
 		System.err.println(username + " : " + user.toString()); //debug message
 	}
     

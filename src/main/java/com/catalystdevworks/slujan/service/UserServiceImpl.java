@@ -17,30 +17,47 @@ import java.util.List;
 
 @Service
 @Validated
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService
+{
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(UserServiceImpl.class);
 	private final UserRepository repository;
 
 	@Autowired
-	public UserServiceImpl(final UserRepository repository) {
+	public UserServiceImpl(final UserRepository repository)
+	{
 		this.repository = repository;
 	}
 
 	@Override
 	@Transactional
-	public User save(@NotNull @Valid final User user) {
+	public User create(@NotNull @Valid final User user)
+	{
+		user.setId(null);
 		LOGGER.debug("Creating {}", user);
-		User existing = repository.findOne(user.getId());
-		if (existing != null) {
-			throw new UserAlreadyExistsException(String.format("There already exists a user with id=%s", user.getId()));
-		}
+//		User existing = repository.findByUsername(user.getUsername());
+//		if (existing != null)
+//		{
+//			throw new UserAlreadyExistsException(String.format(
+//					"There already exists a user with the username=%s",
+//					user.getUsername()));
+//		}
+		return repository.save(user);
+	}
+
+	@Override
+	@Transactional
+	public User createOrUpdate(@NotNull @Valid final User user)
+	{
+		LOGGER.debug("Putting {}", user);
 		return repository.save(user);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<User> getList() {
+	public List<User> getList()
+	{
 		LOGGER.debug("Retrieving the list of all users");
 		return repository.findAll();
 	}

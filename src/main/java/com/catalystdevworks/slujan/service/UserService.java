@@ -6,8 +6,10 @@ import com.catalystdevworks.slujan.domain.User;
 
 public interface UserService {
 
-    User save(User user);
+    User create(User user);
 
+	User createOrUpdate(User user);
+	
     List<User> getList();
 
 	User getUserByUserName(String username);

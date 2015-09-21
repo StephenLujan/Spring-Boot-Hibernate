@@ -40,13 +40,13 @@ public class UserControllerTest {
         final User user = UserUtil.createUser();
         User returnedUser = userController.createUser(user);
         // verify user was passed to UserService
-        verify(userService, times(1)).save(user);
+        verify(userService, times(1)).create(user);
         assertEquals("Returned user should come from the service", savedUser, returnedUser);
     }
 
     private User stubServiceToReturnStoredUser() {
         final User user = UserUtil.createUser();
-        when(userService.save(any(User.class))).thenReturn(user);
+        when(userService.create(any(User.class))).thenReturn(user);
         return user;
     }
 

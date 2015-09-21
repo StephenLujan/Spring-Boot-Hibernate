@@ -34,7 +34,13 @@ function put(url, json, callback) {
 
 function post(url, json, callback)
 {
-	$.post(url, json, callback, MIME);
+	$.ajax({
+		  url: url,
+		  method: "POST",
+		  data: json,
+		  contentType: MIME,
+		  success: callback
+		});
 }
 
 $(function() {
