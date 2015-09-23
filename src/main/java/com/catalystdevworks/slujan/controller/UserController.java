@@ -17,8 +17,12 @@ import javax.validation.Valid;
 import java.util.List;
 
 
+/**
+ * REST Controller for {@link User} entities.
+ */
 @PreAuthorize("hasRole('USER')")
 @RestController
+@RequestMapping("/api/user")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -29,13 +33,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/api/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public User createUser(@RequestBody @Valid final User user) {
         LOGGER.debug("Received request to create the {}", user);
         return userService.create(user);
     }
 
-    @RequestMapping(value = "/api/user", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<User> listUsers() {
         LOGGER.debug("Received request to list all users");
         return userService.getList();
@@ -46,7 +50,7 @@ public class UserController {
 	 * @param username
 	 * @return
 	 */
-	@RequestMapping(value="/api/user/{username}", method=RequestMethod.GET)
+	@RequestMapping(value="/{username}", method=RequestMethod.GET)
 	public User getUser(@PathVariable String username){
 		LOGGER.debug("Received request get the user with username {}", username);
 		return userService.getUserByUserName(username);
@@ -57,7 +61,7 @@ public class UserController {
 	 * @param username
 	 * @param user
 	 */
-	@RequestMapping(value="/api/user/{username}", method=RequestMethod.PUT)
+	@RequestMapping(value="/{username}", method=RequestMethod.PUT)
 	public void  putUser(@PathVariable String username, @RequestBody User user){
 		LOGGER.debug("Received request put the user {}", user);
 		userService.createOrUpdate(user);
