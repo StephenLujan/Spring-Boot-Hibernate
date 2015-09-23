@@ -2,13 +2,14 @@
 
 var MIME = 'application/json;charset=UTF-8';
 //var MIME = '';
+var USER_ENDPOINT = 'api/user/';
 
 function getUsers(callback) {
-	$.get('user/', callback, '');
+	$.get(USER_ENDPOINT, callback, '');
 }
 
 function getUser(userName, callback) {
-	$.get('user/' + username, callback, '');
+	$.get(USER_ENDPOINT + username, callback, '');
 }
 
 function postUser(userName, email, password, callback) {
@@ -19,7 +20,7 @@ function postUser(userName, email, password, callback) {
 	}
 	user = JSON.stringify(user);
 	console.log(user);
-	$.post('user/', user, callback, MIME);
+	$.post(USER_ENDPOINT, user, callback, MIME);
 }
 
 function put(url, json, callback) {

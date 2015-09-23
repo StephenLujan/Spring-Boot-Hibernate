@@ -52,11 +52,9 @@ public class HibernateSpringSecurityApplicationTests
 	@Test
 	public void testHome() throws Exception
 	{
-		MockHttpServletResponse response = this.mvc.perform(get("/"))
+		this.mvc.perform(get("/"))
 				.andExpect(status().isFound())
-				.andExpect(redirectedUrl("http://localhost/login")).andReturn().getResponse();
-
-		System.err.println("PAGE:\n" + response.getContentAsString());
+				.andExpect(redirectedUrl("http://localhost/login"));
 	}
 	
 }

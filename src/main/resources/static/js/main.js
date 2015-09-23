@@ -15,7 +15,7 @@ function detail1() {
 function detail2() {
 	console.log("detail2()");
 	username = $("#detail-2-username").val();
-	query = "/user/" + username;
+	query = "/api/user/" + username;
 	$("#detail-2-query").text(query);
 	getUser(username, function(data) {
 		console.log(data);
