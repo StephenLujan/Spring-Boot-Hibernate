@@ -13,20 +13,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class WebController {
+public class WebController
+{
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(WebController.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(WebController.class);
 
 	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
+	public String home()
+	{
 		LOGGER.debug("Received request root address");
 		return "index.html";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
-	 	LOGGER.debug("Received GET at /login");
-        return new ModelAndView("loginform.html", "error", error);
+	public ModelAndView getLoginPage(@RequestParam Optional<String> error)
+	{
+		LOGGER.debug("Received GET at /login");
+		return new ModelAndView("loginform.html", "error", error);
 	}
 }

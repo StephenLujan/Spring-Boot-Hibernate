@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(UserServiceImpl.class);
+
 	private final UserRepository repository;
 
 	@Autowired
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService
 	public User create(@NotNull @Valid final User user)
 	{
 		LOGGER.debug("Creating {}", user);
-		User existing = repository.findByUsername(user.getUsername());
+		User existing = repository.findOne(user.getUsername());
 		if (existing != null)
 		{
 			throw new UserAlreadyExistsException(String.format(
@@ -63,9 +64,31 @@ public class UserServiceImpl implements UserService
 
 	@Override
 	@Transactional(readOnly = true)
-	public User getUserByUserName(String username)
+	public User getUserByUsername(String username)
 	{
-		return repository.findByUsername(username);
+		LOGGER.debug("Retrieving the user with the username {}", username);
+		User user = repository.findOne(username);
+		LOGGER.trace("Repository retrieved the user {}", user);
+		if (user == null)
+		{
+			throw new UserNotFoundException(String.format(
+					"No User could be found with the username %s", username));
+		}
+		return user;
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public User getUserByEmail(String email)
+	{
+		LOGGER.debug("Retrieving the user with the email {}", email);
+		User user = repository.findByEmail(email);
+		LOGGER.trace("Repository retrieved the user {}", user);
+		if (user == null)
+		{
+			throw new UserNotFoundException(String.format(
+					"No User could be found with the email address %s", email));
+		}
+		return user;
+	}
 }

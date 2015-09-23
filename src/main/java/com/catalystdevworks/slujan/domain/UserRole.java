@@ -8,45 +8,54 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
- * A persistant, {@link User}-granted, authorization to the application.
- * A User may have many UserRoles authorizing different areas of the application.
+ * A persistant, {@link User}-granted, authorization to the application. A User
+ * may have many UserRoles authorizing different areas of the application.
  * 
  * @see RoleEnum
  */
 @Entity
-@Table(name = "user_roles")
+@Table(name = "user_roles",
+// to prevent a duplicate authorization from being added a unique constraint
+// must apply to the combination of role and User.
+uniqueConstraints = @UniqueConstraint(columnNames =
+{ "role", "user_username" }))
 public class UserRole
 {
 
+	/*
+	 * @NotNull is not used on the id here because an id won't exist until it
+	 * reaches the database, and @NotNull validates at the database and sooner
+	 * if "@Validates" is used
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 
 	@NotNull
-	@Column(name = "role_name")
+	@Column(name = "role")
 	@Enumerated(EnumType.STRING)
-	private RoleEnum roleName;
+	private RoleEnum role;
 
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private User user;
 
-	public UserRole(){}
+	public UserRole()
+	{
+	}
 
 	public UserRole(RoleEnum roleName, User user)
 	{
-		this.roleName = roleName;
+		this.role = roleName;
 		this.user = user;
 	}
 
@@ -62,12 +71,12 @@ public class UserRole
 
 	public RoleEnum getRoleName()
 	{
-		return roleName;
+		return role;
 	}
 
 	public void setRoleName(RoleEnum roleName)
 	{
-		this.roleName = roleName;
+		this.role = roleName;
 	}
 
 	public User getUser()

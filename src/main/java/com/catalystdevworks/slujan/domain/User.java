@@ -1,6 +1,5 @@
 package com.catalystdevworks.slujan.domain;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,13 +25,13 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "users")
 public class User
 {
-	
+
 	@Id
 	@NotNull
 	@Size(max = 64)
 	@Column(name = "username", unique = true)
 	private String username;
-	
+
 	@NotNull
 	@Size(max = 64)
 	@Column(name = "password")
@@ -52,6 +51,14 @@ public class User
 	{
 	}
 
+	/**
+	 * Creates a user with the input username, email, and password
+	 * 
+	 * @param username
+	 * @param email
+	 * @param password
+	 * @return
+	 */
 	public static User createUser(String username, String email, String password)
 	{
 		User user = new User();

@@ -23,7 +23,7 @@ public class FakeUserDetailService implements UserDetailsService
 			throws UsernameNotFoundException
 	{
 		LOGGER.debug(username);
-		User user = userRepository.findByUsername(username);
+		User user = userRepository.findOne(username);
 		if (user != null)
 		{
 			LOGGER.debug("Creating UserDetails for '" + username + "'");

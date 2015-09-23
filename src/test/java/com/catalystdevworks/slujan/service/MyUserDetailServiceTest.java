@@ -25,39 +25,44 @@ public class MyUserDetailServiceTest
 {
 	@Mock
 	UserRepository userRepository;
-	
+
 	MyUserDetailService target;
-	
+
 	@Before
-    public void setUp() throws Exception {
-		 target = new MyUserDetailService();
-		 target.setUserRepository(userRepository);
-    }
-	
-	@Test
-	public void shouldThrowUsernameNotFoundException() {
-		String username = "missingUsername";
-        try {
-        	target.loadUserByUsername("missingUsername");
-            fail("Expected exception");
-        } catch (UsernameNotFoundException ignored) {
-        }
-        verify(userRepository, times(1)).findByUsername(username);
+	public void setUp() throws Exception
+	{
+		target = new MyUserDetailService();
+		target.setUserRepository(userRepository);
 	}
-	
+
 	@Test
-	public void shouldReturnSpringUserWithAuthoritiesPerRoles() {
+	public void shouldThrowUsernameNotFoundException()
+	{
+		String username = "missingUsername";
+		try
+		{
+			target.loadUserByUsername("missingUsername");
+			fail("Expected exception");
+		} catch (UsernameNotFoundException ignored)
+		{
+		}
+		verify(userRepository, times(1)).findOne(username);
+	}
+
+	@Test
+	public void shouldReturnSpringUserWithAuthoritiesPerRoles()
+	{
 		String username = "username";
 		User user = User.createUser(username, "email", "password");
 		assertTrue(user.getRoles().size() > 0);
-		
-		when(userRepository.findByUsername(username)).thenReturn(user);
-    	UserDetails userDetails = target.loadUserByUsername(username);
-        	
-        verify(userRepository, times(1)).findByUsername(username);
-        assertEquals(username, userDetails.getUsername());
-        assertEquals(user.getRoles().size(), userDetails.getAuthorities().size());        
+
+		when(userRepository.findOne(username)).thenReturn(user);
+		UserDetails userDetails = target.loadUserByUsername(username);
+
+		verify(userRepository, times(1)).findOne(username);
+		assertEquals(username, userDetails.getUsername());
+		assertEquals(user.getRoles().size(), userDetails.getAuthorities()
+				.size());
 	}
-	
-	
+
 }

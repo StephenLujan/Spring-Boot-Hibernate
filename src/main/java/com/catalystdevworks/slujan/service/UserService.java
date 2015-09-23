@@ -13,6 +13,8 @@ public interface UserService {
 	
     List<User> getList();
 
-	User getUserByUserName(String username);
-
+	User getUserByUsername(String username);
+	
+	User getUserByEmail(String email);
+	
 }

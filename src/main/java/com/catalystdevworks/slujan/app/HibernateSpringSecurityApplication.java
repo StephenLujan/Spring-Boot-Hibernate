@@ -14,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.catalystdevworks.slujan.controller.WebController;
 import com.catalystdevworks.slujan.domain.RoleEnum;
 import com.catalystdevworks.slujan.domain.User;
 import com.catalystdevworks.slujan.domain.UserRole;
@@ -44,11 +43,11 @@ public class HibernateSpringSecurityApplication
 		SpringApplication.run(HibernateSpringSecurityApplication.class, args);
 	}
 
-
 	// Look away now...
 	// Just populating the database with test data
 	@Autowired
 	PasswordEncoder encoder;
+
 	@Bean
 	CommandLineRunner init(final UserRepository userRepository)
 	{
@@ -56,20 +55,21 @@ public class HibernateSpringSecurityApplication
 		{
 			@Override
 			public void run(String... arg0) throws Exception
-			{	
-				//PasswordEncoder encoder = new BCryptPasswordEncoder();
+			{
+				// PasswordEncoder encoder = new BCryptPasswordEncoder();
 				LOGGER.info("populating database with test data...");
-				User user = User.createUser("slujan",
-						"slujan@catalystitservices.com", encoder.encode("pass"));
+
+				User user = User
+						.createUser("slujan", "slujan@catalystitservices.com",
+								encoder.encode("pass"));
 				UserRole admin = new UserRole(RoleEnum.ADMIN, user);
-				UserRole admin2 = new UserRole(RoleEnum.ADMIN, user);
-				
 				user.getRoles().add(admin);
-				user.getRoles().add(admin2);
 				userRepository.save(user);
+
 				userRepository.save(User.createUser("pacman",
 						"pacman@atari.com", encoder.encode("wakawakawaka")));
-				userRepository.save(User.createUser("user", "a@b.com", encoder.encode("pass")));
+				userRepository.save(User.createUser("user", "a@b.com",
+						encoder.encode("pass")));
 			}
 		};
 	}
