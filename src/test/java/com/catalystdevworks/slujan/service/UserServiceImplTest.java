@@ -81,7 +81,7 @@ public class UserServiceImplTest
 			throws Exception
 	{
 		stubRepositoryToReturnExistingUsers(10);
-		Collection<User> list = userService.getList();
+		Collection<User> list = userService.getAll();
 		assertNotNull(list);
 		assertEquals(10, list.size());
 		verify(userRepository, times(1)).findAll();
@@ -98,7 +98,7 @@ public class UserServiceImplTest
 			throws Exception
 	{
 		stubRepositoryToReturnExistingUsers(0);
-		Collection<User> list = userService.getList();
+		Collection<User> list = userService.getAll();
 		assertNotNull(list);
 		assertTrue(list.isEmpty());
 		verify(userRepository, times(1)).findAll();

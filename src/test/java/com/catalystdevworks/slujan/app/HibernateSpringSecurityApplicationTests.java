@@ -1,7 +1,9 @@
 package com.catalystdevworks.slujan.app;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import javax.servlet.Filter;
@@ -9,6 +11,7 @@ import javax.servlet.Filter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -24,7 +27,7 @@ import com.catalystdevworks.slujan.app.HibernateSpringSecurityApplication;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = HibernateSpringSecurityApplication.class)
 @WebAppConfiguration
-@ActiveProfiles("integration-test")
+//@ActiveProfiles("integration-test")
 // Separate profile for web tests to avoid clashing databases
 public class HibernateSpringSecurityApplicationTests
 {
@@ -34,6 +37,9 @@ public class HibernateSpringSecurityApplicationTests
 
 	@Autowired
 	private Filter springSecurityFilterChain;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	private MockMvc mvc;
 
@@ -52,9 +58,23 @@ public class HibernateSpringSecurityApplicationTests
 	@Test
 	public void testHome() throws Exception
 	{
-		this.mvc.perform(get("/"))
-				.andExpect(status().isFound())
+		this.mvc.perform(get("/")).andExpect(status().isFound())
 				.andExpect(redirectedUrl("http://localhost/login"));
 	}
-	
+
+	@Test
+	public void testGetUser() throws Exception
+	{
+		this.mvc.perform(get("/destination")).andExpect(status().isFound())
+				.andExpect(redirectedUrl("http://localhost/login"));
+		this.mvc.perform(
+				post("/login")
+						.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+						.sessionAttr("username", "slujan")
+						.sessionAttr("password", "pass"))
+				.andExpect(status().isFound())
+				.andExpect(redirectedUrl("http://localhost/destination"));
+				//.andExpect(jsonPath("password", equalTo("wakawakawaka")));
+	}
+
 }

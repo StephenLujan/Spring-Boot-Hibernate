@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<User> getList()
+	public List<User> getAll()
 	{
 		LOGGER.debug("Retrieving the list of all users");
 		return repository.findAll();

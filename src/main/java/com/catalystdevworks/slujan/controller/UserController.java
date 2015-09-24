@@ -52,7 +52,7 @@ public class UserController
 	public List<User> listUsers()
 	{
 		LOGGER.debug("Received request to list all users");
-		return userService.getList();
+		return userService.getAll();
 	}
 
 	/**

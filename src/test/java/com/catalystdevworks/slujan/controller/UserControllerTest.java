@@ -62,12 +62,12 @@ public class UserControllerTest
 		assertNotNull(users);
 		assertEquals(10, users.size());
 		// verify user was passed to UserService
-		verify(userService, times(1)).getList();
+		verify(userService, times(1)).getAll();
 	}
 
 	private void stubServiceToReturnExistingUsers(int howMany)
 	{
-		when(userService.getList())
+		when(userService.getAll())
 				.thenReturn(UserUtil.createUserList(howMany));
 	}
 

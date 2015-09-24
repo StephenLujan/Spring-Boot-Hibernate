@@ -1,0 +1,14 @@
+/*
+ * Note: Services performs a discretely invokable logical
+ * operations between your objects and an external objects or parts of the
+ * application, making the logic unsuitable for encapsulation within the
+ * object's class itself.
+ * 
+ * Generally the DAO is as light as possible and exists solely to provide a
+ * connection to the DB, sometimes abstracted so different DB backends can
+ * be used. The service layer is there to provide logic to operate on the data sent to
+ * and from the DAO and the client.
+ *
+ * JPARepository is a good universal implementation of the DAO; you may in
+ * practice sometimes only need to write the service layer.
+ */
