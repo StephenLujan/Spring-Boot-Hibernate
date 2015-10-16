@@ -35,42 +35,8 @@ import com.catalystdevworks.slujan.repository.UserRepository;
 @EnableTransactionManagement
 public class HibernateSpringSecurityApplication
 {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(HibernateSpringSecurityApplication.class);
-
 	public static void main(String[] args)
 	{
 		SpringApplication.run(HibernateSpringSecurityApplication.class, args);
-	}
-
-	// Look away now...
-	// Just populating the database with test data
-	@Autowired
-	PasswordEncoder encoder;
-
-	@Bean
-	CommandLineRunner init(final UserRepository userRepository)
-	{
-		return new CommandLineRunner()
-		{
-			@Override
-			public void run(String... arg0) throws Exception
-			{
-				// PasswordEncoder encoder = new BCryptPasswordEncoder();
-				LOGGER.info("populating database with test data...");
-
-				User user = User
-						.createUser("slujan", "slujan@catalystitservices.com",
-								encoder.encode("pass"));
-				UserRole admin = new UserRole(RoleEnum.ADMIN, user);
-				user.getRoles().add(admin);
-				userRepository.save(user);
-
-				userRepository.save(User.createUser("pacman",
-						"pacman@atari.com", encoder.encode("wakawakawaka")));
-				userRepository.save(User.createUser("user", "a@b.com",
-						encoder.encode("pass")));
-			}
-		};
 	}
 }
